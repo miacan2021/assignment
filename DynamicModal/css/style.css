@@ -1,0 +1,185 @@
+.contact-form__form {
+  display: none;
+}
+
+.modal-overlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 10000;
+}
+
+.modal-container {
+  position: fixed;
+  background-color: #f2f2f2;
+  padding: 3rem 2.5rem;
+  max-width: 31.125rem;
+  top: 10rem;
+  right: 3rem;
+  z-index: 100000;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+
+/* button style*/
+.modal-button-wrapper {
+  position: relative;
+  margin-left: auto;
+  transform: none;
+  margin-top: 1rem;
+  width: 8.3rem;
+  height: 3.1rem;
+  transform: translateY(-10px);
+  background-color: rgba(0, 0, 0, 0.5); /* regular green */
+  /* corner design */
+  clip-path: polygon(
+    0 10%,
+    3% 10%,
+    3% 0,
+    97% 0,
+    97% 10%,
+    100% 10%,
+    100% 90%,
+    97% 90%,
+    97% 100%,
+    3% 100%,
+    3% 90%,
+    0 90%
+  );
+}
+
+.modal-button-frame {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  background-color: #000000; /* regular green */
+  cursor: pointer;
+  outline: none;
+  transition: all 0.1s ease-in-out;
+  width: 8.3rem;
+  height: 2.8rem;
+  /* corner design */
+  clip-path: polygon(
+    0 10%,
+    3% 10%,
+    3% 0,
+    97% 0,
+    97% 10%,
+    100% 10%,
+    100% 90%,
+    97% 90%,
+    97% 100%,
+    3% 100%,
+    3% 90%,
+    0 90%
+  );
+}
+
+.modal-button {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  background-color: #3a7520;
+  background: -moz-linear-gradient(top, #729e52 0 10%, #415d2b 10% 100%);
+  background: -webkit-linear-gradient(top, #729e52 0 10%, #415d2b 10% 100%);
+  background: linear-gradient(to bottom, #729e52 0 10%, #415d2b 10% 100%);
+  color: #fff;
+  padding: 16px 32px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.1s ease-in-out;
+  width: 8rem;
+  height: 2.6rem;
+  /* corner design */
+  clip-path: polygon(
+    0 10%,
+    3% 10%,
+    3% 0,
+    97% 0,
+    97% 10%,
+    100% 10%,
+    100% 90%,
+    97% 90%,
+    97% 100%,
+    3% 100%,
+    3% 90%,
+    0 90%
+  );
+}
+
+.modal-button-inner {
+  position: absolute;
+  background-color: #5c803d;
+  top: 50%;
+  left: 50%;
+  width: 94%;
+  height: 85%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Hover */
+
+.modal-button-wrapper:hover .modal-button-inner {
+  background-color: #4c6c36; /* new color on hover */
+}
+
+/* Blue outline on focus */
+.modal-button-wrapper:focus {
+  border: 2px solid #ffffff;
+  clip-path: none;
+  width: 8.4rem;
+}
+.modal-button-wrapper:focus .modal-button-frame {
+  top: 50%;
+  border: 2px solid #2f54b2;
+  clip-path: none;
+}
+
+/* dissabled */
+
+.modal-button-wrapper.disabled {
+  background: none;
+}
+
+.modal-button-wrapper.disabled .modal-button-frame {
+  background: #a4a09c;
+}
+.modal-button-wrapper.disabled .modal-button {
+  background: #a4a09c;
+}
+
+.modal-button-wrapper.disabled .modal-button-inner {
+  background-color: #e7e5e5;
+  color: #a4a09c;
+  text-shadow: none;
+}
+
+/* pressed */
+.modal-button-wrapper:active {
+  background: none;
+}
+
+.modal-button-wrapper:active .modal-button-inner {
+  background: #415d2b;
+}
+.modal-button-wrapper:active .modal-button {
+  background: #415d2b;
+}
