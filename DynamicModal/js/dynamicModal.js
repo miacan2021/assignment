@@ -45,3 +45,11 @@ section.appendChild(modalContent);
 // Finally, add section to the page
 document.body.appendChild(overlay);
 document.body.appendChild(section);
+
+// Display contact form after click the button
+const contactFormWrapper = document.querySelector(".contact-form__form ");
+
+buttonWrapper.addEventListener("click", () => {
+  section.style.display = "none";
+  contactFormWrapper.style.display = "block";
+});
