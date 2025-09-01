@@ -1,4 +1,3 @@
-// Apply hero text and value proposition
 function updateHeroSection() {
   const heroHeader = document.querySelector(".lm-hero__header");
   if (heroHeader) {
@@ -20,10 +19,38 @@ function updateHeroSection() {
   }
 }
 
-updateHeroSection();
+function updateButtons() {
+  const buttons = document.querySelectorAll(".btn");
+  buttons.forEach((btn) => {
+    if (btn.textContent.trim() === "Request a demo") {
+      btn.textContent = "Contact us";
+    }
+  });
 
-// Reapply on SPA route changes
+ const whyButton = document.querySelector(".btn.btn-video");
+ const whySection = document.querySelector(".lm-why");
+
+ if (whyButton && whySection && !whyButton.dataset.scrollAttached) {
+   whyButton.addEventListener("click", (e) => {
+     e.preventDefault(); // Prevent default click action
+     e.stopPropagation(); // Stop other click handlers (like opening modal)
+     whySection.scrollIntoView({ behavior: "smooth" });
+   });
+   whyButton.dataset.scrollAttached = "true";
+ }
+}
+
+// Initial application
+updateHeroSection();
+updateButtons();
+
+// SPA-safe observer (observe only the main content)
+const mainContent = document.querySelector("body"); // or more specific container
 const observer = new MutationObserver(() => {
-  updateHeroSection();
+  // Delay to prevent feedback loop
+  setTimeout(() => {
+    updateHeroSection();
+    updateButtons();
+  }, 50);
 });
-observer.observe(document.body, { childList: true, subtree: true });
+observer.observe(mainContent, { childList: true, subtree: true });
