@@ -32,22 +32,21 @@ function updateButtons() {
 
  if (whyButton && whySection && !whyButton.dataset.scrollAttached) {
    whyButton.addEventListener("click", (e) => {
-     e.preventDefault(); // Prevent default click action
-     e.stopPropagation(); // Stop other click handlers (like opening modal)
+     e.preventDefault();
+     e.stopPropagation();
      whySection.scrollIntoView({ behavior: "smooth" });
    });
    whyButton.dataset.scrollAttached = "true";
  }
 }
 
-// Initial application
 updateHeroSection();
 updateButtons();
 
-// SPA-safe observer (observe only the main content)
-const mainContent = document.querySelector("body"); // or more specific container
+// SPA observer
+const mainContent = document.querySelector("body");
 const observer = new MutationObserver(() => {
-  // Delay to prevent feedback loop
+  /* to avoid freeze the page */
   setTimeout(() => {
     updateHeroSection();
     updateButtons();
