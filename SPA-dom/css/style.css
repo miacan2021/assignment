@@ -22,3 +22,12 @@
   list-style: none;
   padding-left: 0;
 }
+
+/* Hide youtube modal */
+.v-modal {
+  display: none;
+}
+
+.video-player {
+  display: none;
+}

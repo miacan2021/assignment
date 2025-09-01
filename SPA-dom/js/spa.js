@@ -1,4 +1,3 @@
-// Apply hero text and value proposition
 function updateHeroSection() {
   const heroHeader = document.querySelector(".lm-hero__header");
   if (heroHeader) {
@@ -20,10 +19,37 @@ function updateHeroSection() {
   }
 }
 
-updateHeroSection();
+function updateButtons() {
+  const buttons = document.querySelectorAll(".btn");
+  buttons.forEach((btn) => {
+    if (btn.textContent.trim() === "Request a demo") {
+      btn.textContent = "Contact us";
+    }
+  });
 
-// Reapply on SPA route changes
+ const whyButton = document.querySelector(".btn.btn-video");
+ const whySection = document.querySelector(".lm-why");
+
+ if (whyButton && whySection && !whyButton.dataset.scrollAttached) {
+   whyButton.addEventListener("click", (e) => {
+     e.preventDefault();
+     e.stopPropagation();
+     whySection.scrollIntoView({ behavior: "smooth" });
+   });
+   whyButton.dataset.scrollAttached = "true";
+ }
+}
+
+updateHeroSection();
+updateButtons();
+
+// SPA observer
+const mainContent = document.querySelector("body");
 const observer = new MutationObserver(() => {
-  updateHeroSection();
+  /* to avoid freeze the page */
+  setTimeout(() => {
+    updateHeroSection();
+    updateButtons();
+  }, 50);
 });
-observer.observe(document.body, { childList: true, subtree: true });
+observer.observe(mainContent, { childList: true, subtree: true });
