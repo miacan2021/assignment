@@ -54,15 +54,6 @@ function toggleDrawer() {
 chevron.addEventListener("click", toggleDrawer);
 overlay.addEventListener("click", toggleDrawer);
 
-// Auto-close drawer on scroll bottom
-window.addEventListener("scroll", () => {
-  if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-    content.style.bottom = "-300px";
-    chevron.style.transform = "rotate(0deg)";
-    overlay.style.display = "none";
-  }
-});
-
 // Create Slides
 async function createSlides() {
   const wrapper = document.querySelector(".swiper-wrapper");
@@ -72,6 +63,8 @@ async function createSlides() {
   for (const [index, pokemon] of data.results.entries()) {
     const pokeRes = await fetch(pokemon.url);
     const pokeData = await pokeRes.json();
+    // Get types for tooltip
+    const types = pokeData.types.map((t) => t.type.name).join(", ");
     // Fetch species data for flavor text
     const speciesRes = await fetch(pokeData.species.url);
     const speciesData = await speciesRes.json(); // <-- make sure to await and assign
@@ -87,13 +80,50 @@ async function createSlides() {
     const slide = document.createElement("div");
     slide.classList.add("swiper-slide", `slide${index}`);
     slide.innerHTML = `
+      <div class="tooltip tooltip${index}">Type: ${types}</div>
       <h3>${pokeData.name}</h3>
       <img src="${pokeData.sprites.front_default}" alt="${pokeData.name}" class="pokemon-img" />
       <p>${description}</p>
-      <button class="button">Click</button>
+      <button class="card-button">Click</button>
     `;
     wrapper.appendChild(slide);
+
+    // Tooltip control
+    const tooltip = slide.querySelector(`.tooltip${index}`);
+
+    // Desktop (hover)
+    slide.addEventListener("mouseenter", () => {
+      if (window.innerWidth > 1024) {
+        // Desktop only
+        tooltip.classList.add("visible");
+      }
+    });
+    slide.addEventListener("mouseleave", () => {
+      if (window.innerWidth > 1024) {
+        tooltip.classList.remove("visible");
+      }
+    });
+
+    // Mobile & Tablet (touch / click)
+    slide.addEventListener("click", (e) => {
+      if (window.innerWidth <= 1024) {
+        e.stopPropagation(); // prevent closing immediately
+        document
+          .querySelectorAll(".tooltip.visible")
+          .forEach((t) => t.classList.remove("visible")); // close others
+        tooltip.classList.add("visible");
+      }
+    });
   }
+
+  // Hide tooltip if click outside (mobile/tablet)
+  document.addEventListener("click", () => {
+    if (window.innerWidth <= 1024) {
+      document
+        .querySelectorAll(".tooltip.visible")
+        .forEach((t) => t.classList.remove("visible"));
+    }
+  });
 }
 
 // Initialize Swiper
